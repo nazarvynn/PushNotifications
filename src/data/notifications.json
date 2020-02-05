@@ -1,0 +1,34 @@
+{
+  "notifications": [
+    {
+      "image": "img1.png",
+      "title": "Title 1",
+      "msg": "text 1",
+      "url": "https://via.placeholder.com/600/92c952"
+    },
+    {
+      "image": "img2.png",
+      "title": "Title 2",
+      "msg": "text 2",
+      "url": "https://via.placeholder.com/600/771796"
+    },
+    {
+      "image": "img3.png",
+      "title": "Title 3",
+      "msg": "text 3",
+      "url": "https://via.placeholder.com/600/24f355"
+    },
+    {
+      "image": "img4.png",
+      "title": "Title 4",
+      "msg": "text 4",
+      "url": "https://via.placeholder.com/600/d32776"
+    },
+    {
+      "image": "img5.png",
+      "title": "Title 5",
+      "msg": "text 5",
+      "url": "https://via.placeholder.com/600/f66b97"
+    }
+  ]
+}
