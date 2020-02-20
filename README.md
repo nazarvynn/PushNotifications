@@ -1,2 +1,4 @@
-# express server
-npm start
+```
+$ npm i
+$ npm start
+```

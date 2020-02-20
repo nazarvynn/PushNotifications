@@ -1,34 +1,39 @@
 const PN = {
     TIMEOUT: 10, //in seconds
-    URL: '',
+    URL: '/notifications',
     LOCAL_DATA: [{
-      "image": "/img/img1.png",
       "title": "Title 1",
-      "msg": "text 1",
+      "icon": "/img/img1.png",
+      "image": "https://via.placeholder.com/600/92c952",
+      "body": "text 1",
       "url": "https://via.placeholder.com/600/92c952"
     },
     {
-      "image": "/img/img2.png",
       "title": "Title 2",
-      "msg": "text 2",
+      "icon": "/img/img2.png",
+      "image": "https://via.placeholder.com/600/771796",
+      "body": "text 2",
       "url": "https://via.placeholder.com/600/771796"
     },
     {
-      "image": "/img/img3.png",
       "title": "Title 3",
-      "msg": "text 3",
+      "icon": "/img/img3.png",
+      "image": "https://via.placeholder.com/600/24f355",
+      "body": "text 3",
       "url": "https://via.placeholder.com/600/24f355"
     },
     {
-      "image": "/img/img4.png",
       "title": "Title 4",
-      "msg": "text 4",
+      "icon": "/img/img4.png",
+      "image": "https://via.placeholder.com/600/d32776",
+      "body": "text 4",
       "url": "https://via.placeholder.com/600/d32776"
     },
     {
-      "image": "/img/img5.png",
       "title": "Title 5",
-      "msg": "text 5",
+      "icon": "/img/img5.png",
+      "image": "https://via.placeholder.com/600/f66b97",
+      "body": "text 5",
       "url": "https://via.placeholder.com/600/f66b97"
     }]
 };
@@ -45,15 +50,11 @@ PN.app = (function () {
     function requestPermissions() {
         if (isDefaultPermission()) {
             Notification.requestPermission(status => {
-                ('granted' === status) && registerServiceWorker().then(onGranted);
+                ('granted' === status) && onGranted();
             });
         } else if (isGrantedPermission()) {
-            registerServiceWorker().then(onGranted);
+            onGranted();
         }
-    }
-
-    function registerServiceWorker() {
-        return navigator.serviceWorker.register('src/js/sw.js');
     }
 
     function onGranted() {
@@ -91,42 +92,18 @@ PN.app = (function () {
         run();
     }
 
-    function showNotification(notification) {
-        if (!isGrantedPermission() || !notification) {
+    function showNotification(data) {
+        if (!isGrantedPermission() || !data) {
             return;
         }
-        const {title, image, msg, url} = notification;
-        navigator.serviceWorker.ready.then(function(serviceWorker) {
-            serviceWorker.showNotification(title, {
-                body: msg,
-                icon: image,
-                vibrate: [200, 100, 200, 100, 200, 100, 200],
-                tag: 'vibration-sample',
-                image: url,
-                badge: url,
-                actions: [{ action: "Detail 1", title: "View 1", icon: image }]
-            });
-        });
 
-        // var notification = new Notification(title, {
-        //     icon: image,
-        //     body: msg,
-        //     actions: [{
-        //         action: 'explore', 
-        //         title: 'Explore this new world',
-        //         icon: url
-        //     }, {
-        //         action: 'close', 
-        //         title: 'Close notification',
-        //         icon: image
-        //     }],
-        //     vibrate: [200, 100, 200, 100, 200, 100, 200]
-        // });
-        // notification.onclick = function() {
-        //     this.close();
-        //     const win = window.open(url, '_blank');
-        //     win.focus();
-        // };
+        const {title, icon, image, body, url} = data;
+        const notification = new Notification(title, { icon, image, body });
+        notification.onclick = function() {
+            this.close();
+            const win = window.open(url, '_blank');
+            win.focus();
+        };
     }
 
     function isDefaultPermission() {
