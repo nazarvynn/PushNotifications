@@ -49,6 +49,11 @@ PN.app = (function () {
 
     function requestPermissions() {
         if (isDefaultPermission()) {
+            // Notification.requestPermission(result => result)
+            //     .then(status => {
+            //         ('granted' === status) && onGranted();
+            //     });
+
             Notification.requestPermission(status => {
                 ('granted' === status) && onGranted();
             });
@@ -96,14 +101,16 @@ PN.app = (function () {
         if (!isGrantedPermission() || !data) {
             return;
         }
-
+        
         const {title, icon, image, body, url} = data;
-        const notification = new Notification(title, { icon, image, body });
+        const options = {icon, image, body, requireInteraction: true};
+        const notification = new Notification(title, options);
         notification.onclick = function() {
             this.close();
             const win = window.open(url, '_blank');
             win.focus();
         };
+        
     }
 
     function isDefaultPermission() {
